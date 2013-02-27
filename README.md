@@ -32,8 +32,8 @@ not work for versions beyond the above.
 
 Finally, this works only for Quassel installations using SQLite databases.
 
-Usage:  manageusers.py (add|changepass|delete) <username>
-        manageusers.py (delete) <username>
-        manageusers.py list
+Usage:  manageusers.py (add|changepass|delete) <username>  
+        manageusers.py (delete) <username>  
+        manageusers.py list  
 
 
