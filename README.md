@@ -1,0 +1,2 @@
+quassel-manage-users
+====================
