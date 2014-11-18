@@ -114,9 +114,22 @@ class UserManager(object):
 
         '''
         if (self.db and self.cursor):
+            try:
+                userdata = self.cursor.execute('SELECT * FROM quasseluser where username=:username', 
+                                {'username':username}).fetchone()
+                userid = userdata[0]
+            except:
+                print '(error) Invalid user.'
+            
+            print('Deleting user %s.\n' % username)
             self.cursor.execute('DELETE FROM quasseluser where username=:username', 
                                 {'username':username}).fetchone()
-            print('Deleting user %s.\n' % username)
+            for table in ['buffer','network','ircserver','user_setting','identity']:
+                self.cursor.execute('DELETE FROM ' + table + ' where userid=:userid', 
+                                {'userid':userid}).fetchone()
+            
+            self.cursor.execute('delete from identity_nick where identityid not in (select identityid from identity)', {}).fetchone()
+            self.cursor.execute('delete from backlog where bufferid not in (select bufferid from buffer)', {}).fetchone()
         else:
             print '(error) Could not remove user.'
 
